@@ -1,33 +1,39 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
 import {Text, FAB, List} from 'react-native-paper';
 import Header from '../components/Header';
+import {Context as NoteContext} from '../context/NoteContext';
 
 function ViewNotes({navigation}) {
-  const [notes, setNotes] = useState([]);
+  //   const [notes, setNotes] = useState([]);
+
+  const {state, addnote, deletenote} = useContext(NoteContext);
+  console.log('state', state);
 
   const addNotes = note => {
-    note.id = notes.length + 1;
-    setNotes([...notes, note]);
+    note.id = state.length + 1;
+    //setNotes([...notes, note]);
+    addnote(note);
   };
 
   return (
     <>
       <Header titleText="Simple Note Taking App" />
       <View style={styles.container}>
-        {notes.length === 0 ? (
+        {state.length === 0 ? (
           <View style={styles.titleContainer}>
             <Text style={styles.title}>You do not have any Notes</Text>
           </View>
         ) : (
           <FlatList
-            data={notes}
+            data={state}
             renderItem={({item}) => (
               <List.Item
                 title={item.noteTitle}
                 description={item.noteDescription}
                 descriptionNumberOfLines={1}
                 titleStyle={styles.listTitle}
+                onPress={() => deletenote(item.id)}
               />
             )}
             keyExtractor={item => item.id.toString()}

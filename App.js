@@ -2,12 +2,13 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import {Provider as PaperProvider} from 'react-native-paper';
 import Routes from './src/navigation';
+import {Provider as NoteProvider} from './src/context/NoteContext';
 
 const App = () => {
   return (
-    <PaperProvider>
+    <NoteProvider>
       <Routes />
-    </PaperProvider>
+    </NoteProvider>
   );
 };
 
